@@ -1,0 +1,29 @@
+<mat-icon>search</mat-icon>
+<input
+  type="search"
+  [placeholder]="searchBar?.placeholder || ''"
+  [formControl]="control"
+  (keydown.enter)="onKeyDownEnter()"
+  [nzAutocomplete]="autocomplete">
+<nz-autocomplete #autocomplete>
+  <ng-container *ngIf="suggesting; else: result;">
+    <nz-auto-option>
+      <div style="display: flex; justify-content: center;">
+        <nz-spin nzSimple></nz-spin>
+      </div>
+    </nz-auto-option>
+  </ng-container>
+  <ng-template #result>
+    <nz-auto-optgroup [nzLabel]="'SUGGESTIONS'">
+      <nz-auto-option
+        *ngFor="let suggestion of suggestions"
+        (selectionChange)="onSelect($event, suggestion)"
+        [nzValue]="onComplete(suggestion)">
+        <ng-container *ngIf="suggestionTemplate; else: defaultTemplate">
+          <ng-container *ngTemplateOutlet="suggestionTemplate; context: { $implicit: suggestion }"></ng-container>
+        </ng-container>
+        <ng-template #defaultTemplate>{{suggestion}}</ng-template>
+      </nz-auto-option>
+    </nz-auto-optgroup>
+  </ng-template>
+</nz-autocomplete>

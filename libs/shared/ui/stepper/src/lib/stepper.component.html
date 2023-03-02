@@ -1,0 +1,8 @@
+<nz-steps [nzCurrent]="step">
+  <ng-container *ngFor="let item of _items; let i=index; trackBy: trackBy">
+    <nz-step [nzTitle]="item.stepTitle" [nzStatus]="_status[i]" [nzIcon]="item.stepIcon"></nz-step>
+  </ng-container>
+</nz-steps>
+<ng-container *ngIf="_activeTemplate">
+  <ng-container *ngTemplateOutlet="_activeTemplate"></ng-container>
+</ng-container>

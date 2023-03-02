@@ -1,0 +1,188 @@
+{
+    "name": "platon-app",
+    "$schema": "../node_modules/nx/schemas/project-schema.json",
+    "projectType": "application",
+    "sourceRoot": "apps/platon-app/src",
+    "prefix": "platon",
+    "targets": {
+        "build": {
+            "executor": "@angular-devkit/build-angular:browser",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+                "outputPath": "dist/apps/platon-app",
+                "index": "apps/platon-app/src/index.html",
+                "main": "apps/platon-app/src/main.ts",
+                "polyfills": ["zone.js"],
+                "tsConfig": "apps/platon-app/tsconfig.app.json",
+                "inlineStyleLanguage": "scss",
+                "assets": [
+                    "apps/platon-app/src/favicon.ico",
+                    "apps/platon-app/src/assets",
+                    {
+                        "glob": "**/*",
+                        "input": "assets",
+                        "output": "./assets"
+                    },
+                    {
+                        "glob": "**/*",
+                        "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                        "output": "/assets/vendors/@ant-design/assets/"
+                    },
+                    {
+                        "glob": "**/*.md",
+                        "input": "libs/web-component/src/lib",
+                        "output": "./assets/docs/components"
+                    },
+                    {
+                        "glob": "**/*.svg",
+                        "input": "libs/web-component/src/lib",
+                        "output": "./assets/images/components"
+                    },
+                    {
+                        "glob": "**/*",
+                        "input": "./node_modules/intro.js/",
+                        "output": "./assets/vendors/intro.js/"
+                    },
+                    {
+                        "glob": "**/*",
+                        "input": "./node_modules/katex/dist/",
+                        "output": "./assets/vendors/katex/"
+                    },
+                    {
+                        "glob": "**/*",
+                        "input": "./node_modules/jsplumb/dist/",
+                        "output": "./assets/vendors/jsplumb/"
+                    },
+                    {
+                        "glob": "**/*",
+                        "input": "./node_modules/jsplumb/css/",
+                        "output": "./assets/vendors/jsplumb/css/"
+                    },
+                    {
+                        "glob": "**/*",
+                        "input": "./node_modules/jsxgraph/distrib/",
+                        "output": "./assets/vendors/jsxgraph/"
+                    },
+                    {
+                        "glob": "**/*",
+                        "input": "./node_modules/mathlive/dist/",
+                        "output": "./assets/vendors/mathlive/"
+                    },
+                    {
+                        "glob": "**/*",
+                        "input": "./node_modules/jsoneditor/dist/",
+                        "output": "./assets/vendors/jsoneditor/"
+                    },
+                    {
+                        "glob": "**/*",
+                        "input": "./node_modules/@cisstech/nge/assets/",
+                        "output": "./assets/vendors/nge/"
+                    },
+                    {
+                        "glob": "**/*",
+                        "input": "./node_modules/monaco-editor/min",
+                        "output": "./assets/vendors/nge/monaco/min"
+                    },
+                    {
+                        "glob": "**/*",
+                        "input": "./node_modules/monaco-editor/min-maps",
+                        "output": "./assets/vendors/nge/monaco/min-maps"
+                    },
+                    {
+                        "glob": "**/*.js",
+                        "input": "./node_modules/emoji-toolkit/lib/js/",
+                        "output": "./assets/vendors/emoji-toolkit/"
+                    },
+                    {
+                        "glob": "viz.js",
+                        "input": "./node_modules/viz.js/",
+                        "output": "./assets/vendors/viz/"
+                    }
+                ],
+                "styles": [
+                    "styles/app.scss",
+                    "apps/platon-app/src/styles.scss",
+                    { "input": "styles/ng-zorro/dark.less", "bundleName": "styles.ng-zorro.dark", "inject": false },
+                    { "input": "styles/ng-zorro/light.less", "bundleName": "styles.ng-zorro.light", "inject": false },
+                    { "input": "styles/material/dark.scss", "bundleName": "styles.material.dark", "inject": false },
+                    { "input": "styles/material/light.scss", "bundleName": "styles.material.light", "inject": false }
+                ],
+                "scripts": [],
+                "allowedCommonJsDependencies": [
+                    "fast-deep-equal",
+                    "jsplumb",
+                    "jsoneditor"
+                ]
+            },
+            "configurations": {
+                "production": {
+                    "budgets": [
+                        {
+                            "type": "initial",
+                            "maximumWarning": "500kb",
+                            "maximumError": "1mb"
+                        },
+                        {
+                            "type": "anyComponentStyle",
+                            "maximumWarning": "2kb",
+                            "maximumError": "4kb"
+                        }
+                    ],
+                    "outputHashing": "all"
+                },
+                "development": {
+                    "buildOptimizer": false,
+                    "optimization": false,
+                    "vendorChunk": true,
+                    "extractLicenses": false,
+                    "sourceMap": true,
+                    "namedChunks": true
+                }
+            },
+            "defaultConfiguration": "production"
+        },
+        "serve": {
+            "executor": "@angular-devkit/build-angular:dev-server",
+            "configurations": {
+                "production": {
+                    "browserTarget": "platon-app:build:production"
+                },
+                "development": {
+                    "browserTarget": "platon-app:build:development"
+                }
+            },
+            "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+            "executor": "@angular-devkit/build-angular:extract-i18n",
+            "options": {
+                "browserTarget": "platon-app:build"
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": [
+                    "apps/platon-app/**/*.ts",
+                    "apps/platon-app/**/*.html"
+                ]
+            }
+        },
+        "test": {
+            "executor": "@nrwl/jest:jest",
+            "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+            "options": {
+                "jestConfig": "apps/platon-app/jest.config.ts",
+                "passWithNoTests": true
+            },
+            "configurations": {
+                "ci": {
+                    "ci": true,
+                    "codeCoverage": true
+                }
+            }
+        }
+    },
+    "tags": []
+}
